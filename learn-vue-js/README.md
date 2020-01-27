@@ -156,7 +156,7 @@ JavaScript 데이터가 바뀌게 되었을 때, **Data Bindings**를 타게 된
 
 > 위에서 구현했던 구조를 Vue.js를 통해서는 어떤 식으로 동작하는지 Helloworld 부터 시작해본다.  
 
-[complete/getting-started/index.html](./complete/getting-started/index.html) 파일 참고  
+[complete/getting-started/index.html](https://github.com/joshua1988/learn-vue-js/blob/master/getting-started/index.html) 파일 참고  
 
 해당 파일을 [Open with Live Server]를 통해 띄워보자  
 
