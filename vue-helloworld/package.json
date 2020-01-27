@@ -9,8 +9,9 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "devDependencies": {
-    "webpack": "^4.41.5",
-    "webpack-cli": "^3.3.10"
+  "devDependencies": {},
+  "dependencies": {
+    "vue": "^2.6.11",
+    "vue-cli": "^2.9.6"
   }
 }
