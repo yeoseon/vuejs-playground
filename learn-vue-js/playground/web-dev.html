@@ -1,0 +1,24 @@
+<!-- 기존의 웹 개발 방식 (HTML, CSS, Javascript) -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <!-- Hello World -->
+    </div>
+    <script>
+        // jQuery의 $('#app'); 과 같다.
+        var div = document.querySelector('#app');  
+        // console.log(div);
+        var str = 'Hello world';
+        div.innerHTML = str;
+
+        str = 'Hello world!!!';
+        div.innerHTML = str;
+    </script>
+</body>
