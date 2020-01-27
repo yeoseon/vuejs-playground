@@ -119,3 +119,56 @@ JavaScript 데이터가 바뀌게 되었을 때, **Data Bindings**를 타게 된
 ### Reactivity 코드 라이브러리화 하기  
 
 > 위의 defineProperty 부분을 라이브러리화 해보자.  
+
+```init()``` 메소드와 ```render()``` 메소드로 분리하여 [Javascript의 즉시실행함수](https://github.com/yeoseon/tip-archive/issues/43) 안에 위치시키기  
+다음과 같은 구조로 정의된다.  
+```
+        (function() {
+            function init() {
+                //Object.defineProperty(대상객체, 객체의 속성, {정의할 내용})
+                Object.defineProperty(viewModel, 'str', {
+                    // 속성의 접근했을 때의 동작 정의
+                    get: function() {
+                        // console.log(viewModel.str); 처럼 해당 속성에 접근했을 때
+                        console.log('접근');
+                    },
+                    // 속성에 값을 할당했을 때의 동작 정의 
+                    set: function(newValue) {
+                        console.log('할당', newValue);
+                        render(newValue);
+                    }
+                })
+
+            function render(value) {
+                div.innerHTML = value;
+            }
+
+            init();
+        })();
+```
+
+* 즉시실행함수의 역할  
+```init()```과 ```render()```가 외부에 노출되지 않게 또 다른 [Scope](https://github.com/yeoseon/tip-archive/issues/44)에 넣어준다.  
+**일반적으로 오픈소스 라이브러리들은 이런 식으로 [변수의 유효범위](https://github.com/yeoseon/tip-archive/issues/44)를 관리하고 있다.**  
+
+
+### Hello Vue.js와 뷰 개발자 도구  
+
+> 위에서 구현했던 구조를 Vue.js를 통해서는 어떤 식으로 동작하는지 Helloworld 부터 시작해본다.  
+
+[complete/getting-started/index.html](./complete/getting-started/index.html) 파일 참고  
+
+해당 파일을 [Open with Live Server]를 통해 띄워보자  
+
+**Vue 개발자 도구**  
+* Components  
+Vue.js를 시작했을 때에 구성되는 기본적인 Component 구조도가 나옴  
+message를 수정해줄 경우, 앞에서 구현한 Reactivity 로직이 내장되어 있어 화면에 바로 반영되는 것을 볼 수 있음.  
+
+## 인스턴스  
+
+### 인스턴스 소개  
+
+### 인스턴스와 생성자 함수  
+
+### 인스턴스 옵션 속성  
