@@ -169,6 +169,105 @@ message를 수정해줄 경우, 앞에서 구현한 Reactivity 로직이 내장�
 
 ### 인스턴스 소개  
 
+[playground/instance.html](./playground/instance.html) 파일 참고  
+
+Vue로 개발할 때 필수로 생성해야하는 개발 단위  
+Vue가 여러 API과 속성을 제공하여 개발하기 쉽게 제공하고 있다.  
+
+```
+new Vue();
+````
+
+```#app```이라는 Tag를 찾아서 이 Vue 인스턴스를 붙히겠다는 선언  
+이렇게 붙히는 순간, 해당 태그 안에서 Vue 관련 API와 속성을 사용할 수 있게 된다.  
+element를 무조건 지정해줘야 한다.  
+```
+var vm = new Vue({
+    el: '#app',
+    data: {
+        message: 'hi'
+    }
+});
+```
+
 ### 인스턴스와 생성자 함수  
 
+> 왜 인스턴스를 생성해서 사용하는지 생성자 함수와 함께 알아보자.  
+
+기본적으로 Javascript를 이용하여 인스턴스를 생성하는 방법 중 하나 : 생성자 함수를 이용하는 것  
+
+함수이름이 대문자로 시작한다 : 생성자 함수이다.  
+
+```
+function Person(name, job) {
+    this.name = name;
+    this.job = job;
+}
+```
+
+```
+var p = new Person('josh', 'developer');
+```
+
+Vue 생성자를 미리 정의해놓기
+```
+function Vue() {
+    this.logText = function() {
+        console.log('hello');   
+    }
+}
+```
+
+다음과 같이 미리 정의를 해놓으면, 우리가 Vue 인스턴스를 하나 생성할 때마다 위에 정의해놓은 기능이 장착되게 된다.  
+
+```
+var vm = new Vue();
+```
+
+매번 함수를 구햔하는 것이 아니라, 미리 이렇게 구현을 해놓을 수 있다.  
+그래서 생성자 함수로 Vue에서 API와 속성을 미리 정의해놓고, 우리가 갖다 쓰거나 재사용하게 되는 패턴을 가지게 된다.  
+이게 new Vue를 사용하는 이유이다.  
+
+[생성자 함수 사용](https://developer.mozilla.org/ko/docs/Web/JavaScript/Guide/Obsolete_Pages/Core_JavaScript_1.5_Guide/Creating_New_Objects/Using_a_Constructor_Function) 참고  
+[Prototype 설명 문서](https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/Object/constructor) 참고  
+
 ### 인스턴스 옵션 속성  
+
+> 생성자 함수로 재사용할 수 있는 옵션과 속성에 대해 알아보자.  
+
+다음과 같은 속성과 API를 사용할 수 있다.  
+**Vue 객체에 key-value 형태로 값이 관리된다는 점이 중요하다.**  
+```
+new Vue({
+    el:,
+    template:,
+    data:,
+    methods:,
+    created:,
+    watch:,
+});
+```
+
+[playground/instance.html](./playground/instance.html) 파일 계속
+
+```
+var options = {
+    el: '#app',
+    data: {
+        message: 'hi'
+    }
+ };
+
+var vm = new Vue(options);
+```
+
+다음과 같이 별도의 변수를 선언하여 생성자 함수에 넣어주는 것도 좋지만, 위의 방법 처럼 **객체 리터럴** 방식을 사용하여 객체를 바로 넣어주는 것이 가독성에 있어서 더 좋다.  
+
+[Javascript 객체 생성 방식](https://github.com/yeoseon/tip-archive/issues/47) 참고  
+
+> 생성자 안에 들어가는 것은 **객체**이고, 해당 표기법을 사용해야 한다는 것을 인지한다.
+
+
+## 컴포넌트  
+
+### 컴포넌트 소개  
