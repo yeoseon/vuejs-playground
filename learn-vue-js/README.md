@@ -271,3 +271,201 @@ var vm = new Vue(options);
 ## 컴포넌트  
 
 ### 컴포넌트 소개  
+
+대부분의 모던 프레임워크는 이 컴포넌트를 기반으로 개발하고 있다.  
+
+> 화면의 영역을 영역별로 분리하며 개발하는 것  
+
+핵심: **재사용성**
+
+![컴포넌트의 관계](./assets/02.png) 
+영역을 구분했을 때, 컴포넌트 간의 관계가 생기게 된다. 
+
+### [실습안내] 컴포넌트 등록 및 실습  
+
+[playground/component.html](./playground/component.html) 파일 참고  
+
+기본적으로 Vue 인스턴스를 생성하면 ```Root``` Component가 된다.
+
+**전역 컴포넌트**를 등록하는 방법
+```
+Vue.component('컴포넌트 이름',컴포넌트 내용);
+```
+````
+<body>
+    <div id="app">
+        <app-header></app-header>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+        Vue.component('app-header',{
+            template: '<h1>Header</h1>'
+        });
+
+        new Vue({
+            el: '#app'
+        });
+    </script>
+</body>
+````
+
+### [실습 풀이] 전역 컴포넌트 등록  
+
+[playground/component.html](./playground/component.html) 파일 계속  
+
+Root는 상위, 부모 컴포넌트의 역할을 수행한다.  
+등록한 컴포넌트는 자연스럽게 Root의 하위 컴포넌트로 위치하게 된다.  
+
+지금까지 전역 컴포넌트를 등록하는 방법을 해봤으나, 실제 서비스를 개발할 때에는 전역 컴포넌트를 선언하는 일이 거의 없을 것이다.  
+
+다음 시간에 지역 컴포넌트를 살펴보도록 하자.  
+
+### 지역 컴포넌트 등록  
+
+[playground/component.html](./playground/component.html) 파일 계속  
+
+서비스 개발시 가장 많이 쓰는 컴포넌트이다.  
+다음과 같이 선언한다. 
+```
+new Vue({
+    el: '#app',
+    components: {
+        '컴포넌트 이름(태그)': 컴포넌트 내용
+    }
+});
+```
+
+### 전역 컴포넌트와 지역 컴포넌트의 차이점 
+
+지역 컴포넌트
+
+* 특정 컴포넌트 하단에 어떤 컴포넌트가 등록이 되었는지 컴포넌트 속성으로 바로 알 수 있다.
+* 따라서 서비스 개발시에는 components 속성 아래에 계속 등록해나가며 개발하는 방식을 사용한다.  
+
+전역 컴포넌트  
+
+* 실제 서비스 구현시에는 대부분 플러그인이나 라이브러리 형태로 전역으로 사용해야 하는 컴포넌트 형태만 사용하게 된다.  
+
+### 컴포넌트와 인스턴스의 관계  
+
+[playground/component.html](./playground/component.html) 파일 계속  
+
+```new Vue()```를 통해 인스턴스 하나를 더 생성했을 경우 개발자 도구를 보면 Root Component가 하나 더 생기는 것을 확인할 수 있다.  
+그리고 기존의 전역 및 지역 컴포넌트에 등록되어있는 컴포넌트 태그를 ```div#app2``` 에 붙혀넣기 하고 개발자도구를 살펴보면, 전역 컴포넌트만 나오고 지역 컴포넌트의 태그는 등록되지 않았다고 오류메시지를 뱉는다. 
+
+전역 컴포넌트는 인스턴스를 생성할 때마다, 따로 등록하지 않아도 모든 인스턴스에 모두 등록이 된다.  
+지역 컴포넌트는 인스턴스마다 컴포넌트를 따로 생성을 해줘야 한다.
+
+> 실제로 전역 컴포넌트를 2개 이상 생성하는 일은 없다. 이해를 위한 예시임  
+
+## 컴포넌트 통신 방법 - 기본  
+
+### 컴포넌트 통신  
+
+> 컴포넌트를 영역 별로 구분을 했을 때, 컴포넌트 사이에 관계가 생긴다.  
+* 컴포넌트는 각각의 데이터를 갖는다.  
+* 각 데이터를 컴포넌트 사이에서 공유를 하기 위해 props라는 속성과 이벤트 전달 방식을 이용해야 한다.  
+
+![컴포넌트의 통신 방법](./assets/03.png)  
+
+* 상위에서 하위로는 데이터를 내려준다. (props 속성)
+* 하위에서 상위로는 이벤트를 올려준다. (이벤트 발생)
+
+### 컴포넌트 통신 규칙이 필요한 이유  
+
+간단한 컴포넌트의 구조 예시  
+각각 컴포넌트 하위에 컴포넌트를 하나 더 등록했을 경우
+![컴포넌트의 통신 규칙이 필요한 이유](./assets/04.png)  
+
+AppHeader 컴포넌트에서 특정 사용자가 로그인을 해서 LoginForm 컴포넌트에 데이터를 전달한다면?  
+그 정보를 LoginForm에서 AppFooter로 전달을 한다면?  
+이번에는 AppFooter에서 NavigationBar로 전달을 한다면?  
+
+> 특정 컴포넌트의 변화에 따라 나머지 컴포넌트가 유기적으로 서로 데이터를 주고받았을 때, 이 관계가 복잡해진다면 데이터의 방향을 예측하기 어렵다. -> 버그를 추적하기가 어렵다 ([MVC패턴의 문제점](https://github.com/yeoseon/tip-archive/issues/53)
+
+**Vue.js 에서는 데이터(props라는 속성의 데이터)가 상위에서 하위로만 내려가고, 하위에서 상위로는 이벤트가 발생되도록 통신하는 규칙을 가지고 있다.**  
+> 데이터의 흐름을 추적할 수 있다. 
+
+### props 속성
+
+[playground/props.html](./playground/props.html) 파일 계속  
+
+```
+<body>
+    
+    <div id="app">
+        <app-header></app-header>
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+        var appHeader = {
+            template: '<h1>Header</h1>'
+        }
+        new Vue({
+            el: '#app',
+            components: {
+                'app-header': appHeader
+            },
+            data: {
+                message: 'hi'
+            }
+        })
+    </script>
+</body>
+```
+
+다음과 같이 작성하고 개발자도구를 확인해보면, **Root 컴포넌트 내에 message를 가지고 있는 것을 확인할 수 있다.** 
+
+이를 Root 컴포넌트에서 app-header 컴포넌트로 해당 데이터를 내리고 싶을 때 ```props```를 사용한다. 
+```
+<app-header v-bind:프롭스 속성 이름="상위 컴포넌트 데이터 이름"></app-header>
+```
+즉 다음과 같이 정의한다.  
+다음과 같이 정의하면 app-header 컴포넌트 내에 ```propsdata:'hi'```로 데이터가 전달되게 된다.  
+```
+<body>
+    <div id="app">
+        <app-header v-bind:propsdata="message"></app-header>
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+        var appHeader = {
+            template: '<h1>Header</h1>',
+            props: ['propsdata']
+        }
+        new Vue({
+            el: '#app',
+            components: {
+                'app-header': appHeader
+            },
+            data: {
+                message: 'hi'
+            }
+        })
+    </script>
+</body>
+```
+
+### props 속성의 특징 
+
+위의 예제에서 Root의 ```message``` 의 데이터가 바뀌게 되면 해당 하위 컴포넌트인 app-header의 ```propsdata``` 데이터에도 반영된다. 
+
+**데이터 바인딩**
+```
+var appHeader = {
+    template: '<h1>{{ propsdata }}</h1>',
+    props: ['propsdata']
+}
+```
+다음과 같이 ```{{}}```를 통해 데이터 속성명을 넣어주게 되면 화면에 그대로 나타나게 된다.  
+
+### [실습 안내] props 속성 실습 / 풀이
+
+> 컴포넌트 별로 각각의 고유한 유효범위를 갖기 때문에, 컴포넌트 별로 속성명이 겹쳐도 관계 없이 쓸 수 있다. 
+
+### event emit (이벤트 발생)  
