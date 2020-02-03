@@ -508,3 +508,31 @@ data에 대해서 ```{{}}``` 를 이용하여 화면에 출력할 수 있다. da
 [this 관련 글 2](https://medium.com/quick-code/understanding-the-this-keyword-in-javascript-cb76d4c7c5e8)  
 [JavaScript의 this](https://github.com/yeoseon/tip-archive/issues/84)  
 
+
+
+## 컴포넌트 통신방법 - 응용  
+
+### 같은 컴포넌트 레벨 간의 통신 방법  
+
+AppContent와 AppHeader가 어떻게 통신하는가.  
+
+![같은 컴포넌트 레벨 통신](./assets/05.png)  
+
+### 같은 컴포넌트 레벨 간의 통신 방법 구현  
+
+[playground/component-same-level.html](./playground/component-same-level.html) 참고
+
+같은 컴포넌트 사이의 통신은 막혀있다.  
+
+그래서 event emit을 통해 상위 컴포넌트로 올렸다가, 상위 컴포넌트에서 도착 컴포넌트로 props로 내려주면 된다.  
+
+Root 에서 appHeader로 props를 내리려면 data를 선언해주어야 한다.  
+
+![같은 컴포넌트 레벨 통신](./assets/06.png)  
+
+## 라우터  
+
+### 뷰 라우터 소개와 설치  
+
+
+
