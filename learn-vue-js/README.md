@@ -469,3 +469,42 @@ var appHeader = {
 > 컴포넌트 별로 각각의 고유한 유효범위를 갖기 때문에, 컴포넌트 별로 속성명이 겹쳐도 관계 없이 쓸 수 있다. 
 
 ### event emit (이벤트 발생)  
+
+아래에서 위로 컴포넌트의 신호를 보낼 때, 데이터를 다시 올리는 게 아니라 이벤트를 올린다.  
+
+[playground/event-emit.html](./playground/event-emit.html) 참고  
+
+> app-header에서 Root Component로 이벤트를 보내보자.  
+
+$emit이라는 API를 이용해서 pass라는 이벤트를 발생시킨다.  
+```
+this.$emit('pass');
+```
+
+하위컴포넌트에서 emit한 pass라는 이벤트를 받아서 상위컴포넌트에 정의된 logText라는 methods를 실행시켰다.  
+```
+<div id="app">
+        <app-header v-on:하위 컴포넌트에서 발생한 이벤트 이름 = "상위 컴포넌트의 메서드 이름"></app-header>
+</div>
+
+<div id="app">
+        <app-header v-on:pass = "logText"></app-header>
+</div>
+```
+
+### [실습 안내] event emit 실습  
+
+appContent에서 Root로 event를 emit하여 10(this.num)에 1씩 더하도록 console창에 출력하기.  
+
+data에 대해서 ```{{}}``` 를 이용하여 화면에 출력할 수 있다. data가 변경되는 즉시 반영되어 보여진다.  
+
+### 뷰 인스턴스에서의 this  
+
+```this```  
+
+객체 안에서 다른 속성을 가리킬 때 this를 쓰면 해당 객체를 바라보게 된다.  
+
+[this 관련 글 1](https://www.w3schools.com/js/js_this.asp)  
+[this 관련 글 2](https://medium.com/quick-code/understanding-the-this-keyword-in-javascript-cb76d4c7c5e8)  
+[JavaScript의 this](https://github.com/yeoseon/tip-archive/issues/84)  
+
