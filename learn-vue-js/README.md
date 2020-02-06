@@ -534,5 +534,44 @@ Root 에서 appHeader로 props를 내리려면 data를 선언해주어야 한다
 
 ### 뷰 라우터 소개와 설치  
 
+뷰에서 싱글 페이지 애플리케이션을 구현하거나 화면을 이동할 때 사용되는 라이브러리  
+Vue.js에서 공식 라이브러리로 관리하고 있다.  
 
+
+[라우터 공식 사이트 설치 문서 링크](https://router.vuejs.org/installation.html)  
+
+[playground/router.html](./playground/router.html) 참고  
+
+### 뷰 라우터 인스턴스 연결 및 초기 상태 안내  
+
+뷰 라우터를 Vue 인스턴스에서 사용시켜보자.  
+
+```$route```가 생기는 것을 개발자 도구에서 볼 수 있다.  
+= router가 Vue 인스턴스(Root)에 **주입이 되었다고 한다.**  
+
+### [실습 안내] routes 속성 설명 및 실습 안내  
+
+* ```routes``` : 페이지의 라우팅 정보가 배열로 들어간다.(어떤 url로 들어갔을 때 어떤 페이지가 뿌려질지의 정보). 페이지의 개수만큼 객체가 필요하다.  
+    * ```path```: 페이지의 url  
+    * ```component```: 해당 url에서 표시될 Component  
+
+**라우터 뷰**  
+접속하는 url에 따라서 페이지가 달라지는 영역  
+```<router-view></router-view>```로 정의한다.  
+이 태그는 반드시 Vue 인스턴스에 router를 연결해야지만 사용할 수 있다.  
+
+router로 설정한 url(```/login```)으로 접속해보면 ```<router-view></router-view>``` 안에 표현된다.  
+
+### 링크를 이용한 페이지 이동 및 router-link 태그 설명  
+
+일일히 url를 바꿔 접속하지 않고, 화면에서 link 이동을 제공할 수 있도록 기능한다.  
+```<router-link to="[url]"></router-link>``` 를 통해 입력하면 최종적으로 화면에서는 ```<a href=""></a>``` 태그로 변환되어 나타난다.
+
+### 라우터 정리 및 학습 방향 안내  
+
+* 라우터 : 페이지를 이동할 때 사용하는 Vue 공식 라이브러리이자 기능이다.  
+
+* 추가적으로 살펴볼 내용들 : 라우터 인증, 네비게이션 가드 ...  
+
+[네비게이션 가드 내용 참고](https://joshua1988.github.io/web-development/vuejs/vue-router-navigation-guards/)  
 
