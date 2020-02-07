@@ -575,3 +575,196 @@ router로 설정한 url(```/login```)으로 접속해보면 ```<router-view></ro
 
 [네비게이션 가드 내용 참고](https://joshua1988.github.io/web-development/vuejs/vue-router-navigation-guards/)  
 
+
+## HTTP 통신 라이브러리 axios  
+
+### HTTP 라이브러리와 Ajax 그리고 Vue Resource  
+
+* Ajax  
+    * 비동기적인 웹 애플리케이션 제작을 위한 웹 개발 기법   
+    * 변경하고 싶은 데이터만 서버에서 받아와서 갈아 껴주는 개념  
+    * SPA 페이지 제작이 쉬워졌다.  
+
+* [Vue Resource](https://github.com/pagekit/vue-resource)    
+    * 예전 Vue 공식 HTTP 클라이언트 라이브러리  
+    * 2년 전에 관리하지 않기로 함.  
+    * Vue Resource 관련 샘플들은 오래되었을 소스코드일 가능성이 많으니 참고할 것  
+
+### axios 소개 및 오픈 소스를 사용하기 전에 알아야 할 것들  
+
+[axios github](https://github.com/axios/axios)  
+
+Vue에서 권고하고 있는 HTTP 통신 라이브러리  
+
+Promise 기반의 HTTP 통신 라이브러리  
+
+다른 라이브러리에 비해 문서화가 잘 되어 있고 API가 다양하다.  
+
+Promise(Javascript 비동기 처리 패턴 중 하나) based HTTP client for the 
+
+* [Javascript 비동기 처리 패턴](https://joshua1988.github.io/web-development/javascript/javascript-asynchronous-operation/)    
+    1. callback
+    2. [promise](https://joshua1988.github.io/web-development/javascript/promise-for-beginners/)
+    3. promise + generator 
+    4. [async & await](https://joshua1988.github.io/web-development/javascript/js-async-await/)
+
+* 오픈 소스 이용하는 방법  
+    * star 수가 많을 수록 좋다.  
+    * commits, contributors 수를 보면 좋다.  
+    * 라이브러리가 언제 수정이 되었는 지 확인한다.  
+
+### axios 실습 및 this 설명  
+
+promise를 익혀야 then-catch 문을 이해할 수 있다.  
+
+axios.get을 처리하기 전에 ```var vm```으로서 부르는 this와   
+axios.get을 비동기 처리에 의해서 들어오는 콜백함수의 this가 다르다.  
+
+전자는 Component를 바라보고,  
+후자는 비동기 처리를 했을 때 실행 Context가 바뀌면서 바뀐다.  
+
+[javascript 동작원리 참고](https://joshua1988.github.io/web-development/translation/javascript/how-js-works-inside-engine/)  
+
+```console.log```로 찍어보자 !  
+
+```
+new Vue({
+    el: '#app',
+    data: {
+        users: []
+    },
+    methods: {
+        getData: function() {
+            var vm = this;
+            axios.get('https://jsonplaceholder.typicode.com/users/')
+                .then(function(response) {
+                    console.log(response.data);
+                    vm.users = response.data;
+                    //이 안에서 호출하는 this와 위의 vm의 this가 다르다.
+                })
+                .catch(function(error) {
+                    console.log(error);
+                });
+        }
+    }
+})
+```
+
+### 웹 서비스에서의 클라이언트와 서버와의 HTTP 통신 구조  
+
+브라우저에서 axios를 이용하여 HTTP 프로토콜을 통해 통신하는 구조.  
+
+![HTTP 통신 구조](https://user-images.githubusercontent.com/54384004/73987720-a28ece00-4984-11ea-9dc0-9d31c96fbab5.png)
+
+* 브라우저(Client)와 서버(Server)가 HTTP를 주고 받는 구조 - 요청과 응답  
+    1. 브라우저에서 HTTP 요청(request)이 서버로 날라간다.  
+    2. 서버의 요청을 받아 내부적인 특정 백엔드 로직을 통해서 DB의 데이터를 꺼내온다.  
+    3. 데이터 결과물을 HTTP 응답(response)으로 브라우저로 돌려준다.
+
+
+### 크롬 개발자 도구 네트워크 패널 보는 방법  
+
+XHR: 통신을 볼 수 있다 ! 
+Headers: 특정 요청 및 응답에 대한 부가적인 정보  
+
+[프런트엔드 개발자가 알아야 하는 HTTP 프로토콜](https://joshua1988.github.io/web-development/http-part1/)  
+[구글 크롬 개발자도구 공식 문서](https://developers.google.com/web/tools/chrome-devtools/)  
+
+## 템플릿 문법 기본  
+
+### 템플릿 문법 소개 : 데이터 바인딩과 디렉티브  
+
+* 데이터 바인딩  
+    * 콧수염 괄호(Mustache tag)  
+* 디렉티브  
+    * HTML 태그에서 ```v-```라는 속성으로 사용되는 태그  
+    * 이게 붙으면 Vue에서 모두 인식해서 내부적으로 돌아간다.  
+
+### 데이터 바인딩과 computed 속성  
+
+[playground/data-binding.html](./playground/data-binding.html) 참고 
+
+값을 바꾸는 즉시 반영되는 것 : reactivity  
+값을 바꾸기 위한 통신 : 데이터 바인딩  
+
+```computed 속성``` : 기존에 선언된 data를 이용해 어떠한 처리를 하고 싶을 때 사용한다. 기존 선언된 data의 값이 바뀌면 해당 속성을 통해 같이 처리된다.  
+
+```
+computed: {
+    doubleNum: function() {
+        return this.num * 2;
+    }
+}    
+```
+### [실습 안내] 뷰 디렉티브와 v-bind  
+
+```v-```가 붙는 특수한 속성들  
+
+[playground/data-binding.html](./playground/data-binding.html) 참고  
+
+```
+<p v-bind:id="uuid">{{ num }}</p>
+<p id="abc1234">{{ num }} </p> 과 같다.  
+```
+
+**Vue에서 관리하는 data가 바뀌면, 화면에서 보이는 텍스트 뿐만 아니라, HTML DOM 까지 연결하여 reactivity로 바꿔준다.**  
+
+### [실습 풀이] 클래스 바인딩, v-if, v-show  
+
+class 역시 binding을 통해 변경 가능하다.  
+
+```v-if``` 활용 : 조건에 따라 특정 tag의 내용을 보여주느냐, 안보여주느냐  
+```
+<div v-if="loading">
+    <!-- user가 로그인 하기 전의 상태 -->
+    Loading... 
+</div>
+<div v-else>
+    <!-- user 로그인 완료 -->
+    test user has been logged in  
+</div>
+```
+
+```v-show``` 활용 : ```v-if```와의 차이  
+```v-if```는 DOM을 아예 제거. ```v-show```는 ```display:none;``` 처리
+
+### 모르는 문법이 나왔을 때 공식 문서를 보고 해결하는 방법  
+
+[playground/data-binding.html](./playground/data-binding.html) 참고 
+
+**처음에는 공식 문법을 보면서 구현하며 연습하자.  
+스스로 해결해나갈 수 있는 능력을 키우자.**  
+
+> TODO: 인풋 박스를 만들고 입력된 값을 p 태그에 출력해보세요.  
+
+[Form Input Binding 공식 문서](https://vuejs.org/v2/guide/forms.html#ad)를 참고한다.  
+
+```
+<input v-model="message" placeholder="edit me" type="text">
+<p>
+    Message is: {{message}} 
+</p>
+```
+
+### methods 속성과 v-on 디렉티브를 이용한 키보드, 마우스 이벤트 처리 방법  
+
+[playground/methods.html](./playground/methods.html) 참고 
+
+```
+<button v-on:click="메서드 이름"></button>
+```
+```
+keypress 도 가능
+<input type="text" v-on:keyup="메서드 이름">
+```
+
+event modifier (공식문서 참고)  
+```
+enter를 입력했을 때만 logText를 실행하겠다.  
+<input type="text" v-on:keyup.enter="logText">
+```
+
+## 템플릿 문법 실전  
+
+
+
