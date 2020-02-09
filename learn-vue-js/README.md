@@ -766,5 +766,54 @@ enter를 입력했을 때만 logText를 실행하겠다.
 
 ## 템플릿 문법 실전  
 
+### watch 실전  
+
+데이터에 변화에 따라서 특정 로직을 실행할 수 있는 속성  
+
+[playground/watch.html](./playground/watch.html) 참고  
+
+Computed와 뭐가 다르지??  
+
+### watch vs computed  
+
+[playground/watch-vs-computed.html](./playground/watch-vs-computed.html) 참고 
+
+**Computed**  
+
+* 데이터에 대한 의존성을 가지고 있다.  
+* 로직이 실행될 때 기준이 되는 값이 Data이다.  
+* 빠르게 계산이 된다. 
+* 캐싱 등에 대한 튜닝이 많이 되어 있다.  
+* 단순한 값에 대한 validation, 간단한 텍스트 연산 등을 실행할 때 사용한다.  
 
 
+**Watch**  
+
+* 데이터의 값을 조정한다는 면에서 computed와 같다.  
+* 무거운 로직 (특히 데이터 요청)을 구현할 때 사용한다.  
+* methods 속성에 있는 내용들과 엮어서 사용하면 좋을 것이다.  
+* 인자를 2개 받는다. (newValue, oldValue)  
+* 두번째 인자 : 기존의 값  
+* 첫번째 인자 : 새로운 값  
+* 값의 변화를 추적하기 때문에, 두 인자를 받을 수 있다.  
+
+
+[Computed Properties and Watchers 참고](Computed Properties and Watchers)  
+
+> 웬만하면 Computed를 쓰는게 좋고, watch 보다는 computed가 대부분의 케이스에 적합하다.  
+
+Computed로 해결할 수 있는데, 굳이 Watch를 쓰게되면 코드가 지저분해지게 된다.  
+
+### Computed 속성을 이용한 클래스 코드 작성 방법  
+
+[playground/computed-usage.html](./playground/computed-usage.html) 참고  
+
+v-bind를 통해 class 속성 등을 변경할 수 있지만, 이 또한 로직에 따라 해당 내용을 추가할지, 안할지 선택할 수 있다.  
+
+```
+v-bind:class="{ warning: isError }
+```
+
+이것을 Computed로 풀어보자.  
+
+## 프로젝트 생성도구 - Vue CLI
