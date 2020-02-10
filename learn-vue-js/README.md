@@ -817,3 +817,114 @@ v-bind:class="{ warning: isError }
 이것을 Computed로 풀어보자.  
 
 ## 프로젝트 생성도구 - Vue CLI
+
+## Vue CLI
+
+### 최신 Vue CLI 소개  
+
+[공식 사이트](https://cli.vuejs.org/)  
+
+Command Line Interface - 명령어 보조 실행 도구  
+
+이제 Live Server로 하지 말자~~  
+
+### Vue CLI 도구 설치할 때 문제점 해결 방법  
+
+```
+npm install -g @vue/cli
+```
+
+* Permission 에러 발생시  
+```-g``` 권한으로 설치했을 때, 해당 디렉터리에 Write 권한이 없기 때문에(사용자 권한이 관리자가 아니기 때문에) 발생한다.  
+따라서 앞에 ```sudo```를 붙혀준다.  
+
+* 설치된 디렉터리가 어디인가?   
+Mac  
+```/usr/local/lib/node_modules```  
+Windows  
+```%USERPROFILE%\AppData\Roaming\npm\node_modules```  
+
+### CLI 2.x와 3.x의 차이점 / 프로젝트 생성 및 서버 실행  
+
+[Vue CLI 2.x]  
+```
+vue init [프로젝트템플릿유형] [프로젝트폴더위치]  
+
+vue init webpack-simple [프로젝트폴더위치]
+```
+
+[Vue CLI 3.x]  
+```
+vue create '프로젝트 폴더 위치'  
+```
+
+default로 선택하고, ```cd '프로젝트 폴더 위치'``` -> ```npm run serve```  
+
+### CLI로 생성한 프로젝트 폴더 구조 확인 및 main.js 파일 설명  
+
+로컬 서버 실행 
+```
+npm run server
+```
+* npm(node package management)의 역할  
+package.json 파일에 정의되어있는 ```serve```를 실행한다.  
+    ``` 
+    vue-cli-service serve
+    ```  
+* ```public/index.js```  
+```built files will be auto injected```
+빌드된 파일이 자동으로 주입될 것이다.  
+
+```src```에 구현해놓은 파일들이 webpack으로 인해 index.js로 주입된다.  
+
+* ```main.js```  
+[vue-cli/src/main.js](./vue-cli/src/main.js) 참고  
+```render``` : 템플릿이라는 속성을 정의했을 때 실행되는 함수  
+
+### 싱글 파일 컴포넌트 소개 및 여태까지 배운 내용 적용하는 방법  
+
+싱글 파일 컴포넌트 (```.vue```)  
+
+[vue-cli/src/a.vue](./vue-cli/src/a.vue) 참고  
+
+지금까지 배웠던 아래의 코드를 적용하는 방법  
+```
+var appHeader = {
+    template: '<div>header</div>'
+    methods: {
+        addNum: function() {
+        }
+    }
+}
+```
+
+### App.vue와 Helloworld.vue 설명  
+
+[vue-cli/src/main.js](./vue-cli/src/main.js) 참고  
+App.vue에서 가져온 내용을 ```App```이라는 변수에 넣어줬다는 뜻  
+```
+import App from './App.vue'
+```
+
+그럼 App.vue를 알아보자.  
+[vue-cli/src/App.vue](./vue-cli/src/App.vue) 참고  
+
+```
+<HelloWorld msg="Welcome to Your Vue.js App"/>
+```
+
+Vue 스타일 가이드에서는 하이픈(-) 방식을 권장하고 있다.  
+```
+<hello-world>우리가 지금까지 등록했었던 Component 방식 (하이픈)</hello-world>
+<HelloWorld>파스칼 케이스</HelloWorld>
+<Helloworld/>
+```
+
+**컴포넌트에 있는 내용을 들고와서 ```components``` 속성에 넣어 사용한다.**  
+
+[vue-cli/src/components/HelloWorld.vue](./vue-cli/src/components/HelloWorld.vue) 참고  
+
+## 싱글 파일 컴포넌트  
+
+### 싱글 파일 컴폰너트에 배운 내용 적용하여 개발 시작하기  
+
