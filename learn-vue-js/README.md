@@ -924,7 +924,117 @@ Vue 스타일 가이드에서는 하이픈(-) 방식을 권장하고 있다.
 
 [vue-cli/src/components/HelloWorld.vue](./vue-cli/src/components/HelloWorld.vue) 참고  
 
+삭제했으므로 여기에 옮김.  
+
+App.vue  
+```
+<template>
+  <div id="app">
+    <img alt="Vue logo" src="./assets/logo.png">
+    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <!-- 컴포넌트 명명법 종류 -->
+    <!-- 
+    <hello-world>우리가 지금까지 등록했었던 Component 방식 (하이픈)</hello-world>
+    <HelloWorld>파스칼 케이스</HelloWorld>
+    <Helloworld/> 
+    -->
+  </div>
+</template>
+
+<script>
+import HelloWorld from './components/HelloWorld.vue'
+
+export default {
+  // 인스턴스 옵션 속성 or 컴포넌트 옵션 속성  
+  name: 'App',
+  components: {
+    HelloWorld,
+    // 'hello-world': HelloWorld,
+  }
+}
+</script>
+
+<style>
+#app {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+  margin-top: 60px;
+}
+</style>
+```
+
 ## 싱글 파일 컴포넌트  
 
-### 싱글 파일 컴폰너트에 배운 내용 적용하여 개발 시작하기  
+### 싱글 파일 컴포너트에 배운 내용 적용하여 개발 시작하기  
 
+
+[vue-cli/src/App.vue](./vue-cli/src/App.vue) 참고  
+
+```<template></template>``` 속성은, 최상위 레벨에 HTML 태그가 하나만 있어야 한다.  
+```
+The div element has no special meaning at all. It represents its children. It can be used with the class, lang, and title attributes to mark up semantics common to a group of consecutive elements.
+
+
+[vue/valid-template-root]
+The template root requires exactly one element.
+```
+
+### 싱글 파일 컴포넌트 체계에서 컴포넌트 등록하기  
+
+**App.vue에서 components에 만든 컴포넌트(AppHeader)를 등록하여 사용해보자.**  
+
+[vue-cli/src/components/AppHeader.vue](./vue-cli/src/components/AppHeader.vue) 참고  
+[vue-cli/src/App.vue](./vue-cli/src/App.vue) 참고  
+
+컴포넌트 파일이름은 파스칼 케이스로 만드는 것이 좋다.  
+최소한 두 단어 이상으로 조합한다. (스타일 가이드 참조)  
+
+> 왜?  
+> 해당 Component 명을 통해 태그를 만들어 사용해야 하는데,  
+> HTML 태그인지, 만들어진 태그인지 구별이 힘드므로 충돌나지 않게 해야한다.  
+
+컴포넌트의 내용을 만들고, 해당 컴포넌트를 변수로 넣었다.  
+
+### 싱글 파일 컴포넌트에서 props 속성 사용하는 방법  
+
+> props  
+> 상위 컴포넌트에서 하위 컴포넌트로 데이터를 보내고 싶을 때 ! 
+
+**App.vue에서 props를 통해 ```str```을 내려 AppHeader의 내용에 반영해보자.**  
+
+[vue-cli/src/components/AppHeader.vue](./vue-cli/src/components/AppHeader.vue) 참고  
+[vue-cli/src/App.vue](./vue-cli/src/App.vue) 참고  
+
+```
+ <app-header v-bind:프롭스 속성 이름="상위 컴포넌트의 데이터 이름"></app-header>
+ ```
+
+* 프롭스 속성 이름 : 하위 컴포넌트에서 ```props```를 통해 정의한 속성 이름  
+* 상위 컴포넌트의 데이터 이름 : 상위 컴포넌트에서 정의한 데이터 이름 (```str```)
+
+### 싱글 파일 컴포넌트에서 event emit 구현하기  
+
+> event emit  
+> 하위 컴포넌트에서 상위 컴포넌트로 event를 보내고 싶을 때 ! 
+
+**AppHeader에 특정 버튼을 만들어 이를 통해 App 컴포넌트로 이벤트를 전달해서 propsdata를 바꿔보자.**
+
+[vue-cli/src/components/AppHeader.vue](./vue-cli/src/components/AppHeader.vue) 참고  
+[vue-cli/src/App.vue](./vue-cli/src/App.vue) 참고  
+
+```
+<button v-in:click="sendEvent">send</button>
+```
+하위 컴포넌트에서 다음과 같이 정의하고, ```methods``` 속성을 이용해 ```sendEvent``` 함수를 정의하여 ```$emit('')``` API를 사용하게 되면, 이 하위컴포넌트에서 emit한 Event를 받는 곳은 이 하위컴포넌트의 태그를 사용하고 있는 곳이다. (```<app-header>```를 사용하고 있는 App 컴포넌트)
+
+### Vue CLI로 생성한 프로젝트 내용 정리   
+
+* Vue CLI : Vue 명령어 보조 도구  
+* ```npm run serve``` - package.json에 선언된 명령어 실행  
+[웹팩 NPM 소개 강좌 링크](https://www.inflearn.com/course/webpack-%EC%9B%B9%ED%8C%A9-%EA%B0%95%EC%A2%8C/lecture/8151) 참고  
+* index.html - built files will be auto injected (WebPack 이용)  
+* main.js 
+* App.vue  
