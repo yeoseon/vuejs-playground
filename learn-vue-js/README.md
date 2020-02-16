@@ -1038,3 +1038,74 @@ The template root requires exactly one element.
 * index.html - built files will be auto injected (WebPack 이용)  
 * main.js 
 * App.vue  
+
+## 최종 프로젝트 - 사용자 입력 폼 만들기  
+
+### 프로젝트 생성 및 마크업 작업  
+
+[vue-form](./vue-form) 참고  
+
+**id와 password를 입력받아 login 버튼을 보내면 해당 정보를 어딘가 보내보자.**  
+
+### v-model 속성과 submit 이벤트 처리  
+
+```v-model```: input에 있는 내용을 ```v-model```을 이용해서 연결하면, 양방향 데이터 바인딩이 된다. (화면에서 입력을 하던, username 데이터가 값을 갖던 연결됨)  
+
+**로그인 버튼을 클릭했을 때, 이 두 input 값을 가져와보자.**  
+(이 버튼이 submit type이면 엔터를 누를 때 반영이 된다.)
+
+이벤트가 어떤 식으로 전달되고, 방향을 바꿀 수 있는지 아래 글을 참고한다.  
+[이벤트 버블링, 이벤트 캡쳐링 블로그 글 참고](https://joshua1988.github.io/web-development/javascript/event-propagation-delegation/)  
+
+현재 login 버튼을 누르면 아무것도 안한 상태라면 **새로고침**이 된다.  
+어떤 method를 실행하고 싶어도, 그 전에 새로고침이 되어버려서 실행할 수 없는 상태이다.  
+(어떤 form을 제출하고 해당 페이지로 넘어가는 속성이 있기 때문에)   
+
+이를 막는 방법 
+
+```
+event.preventDefault();  
+```
+button에 ```v-on:click```을 통해서 해도 되지만, 어차피 해당 정보는 submit 타입이라 ```form```으로 올라가게 되므로, ```form``` 태그에 ```v-on:submit```을 통해 설정한다.  
+
+```
+v-on:submit.prevent="submitForm"  
+```
+이걸 통해 위에서 말한 ```preventDefault()```기능을 vue를 이용해 설정할 수 있다.! 
+
+### axios를 이용한 데이터 전송 및 form 구현  
+
+**HTTP 통신 라이브러리인 axios를 이용해 입력 받은 값을 서버로 보내보자.**  
+
+```
+npm install axios
+```  
+
+데이터를 주고받은 결과를 console과 network(XHR)을 통해 확인해보자.  
+
+
+## 마무으리  
+
+### 수업 정리 및 향후 학습 방향 안내  
+
+* Reactivity  
+* 인스턴스  
+* 컴포넌트  
+* 컴포넌트 통신  
+    * props  
+    * event emit  
+* HTTP 통신 라이브러리 (axios)  
+* 템플릿 문법  
+    * 데이터 바인딩  
+    * 뷰 디렉티브  
+* Vue CLI  
+* 싱글파일 컴포넌트  
+
+**꼭 읽기**  
+
+- [Vue.js 공식 문서](https://vuejs.org/v2/guide/) 
+- [Vue.js 스타일 가이드](https://vuejs.org/v2/guide/)  
+- [Vue.js Cookbook](https://vuejs.org/v2/cookbook/)  
+- [Vuex 공식 문서](https://www.inflearn.com/course/Age-of-Vuejs/lecture/21473)  
+- [VueRouter 공식 문서](https://router.vuejs.org/)  
+- [Vue CLI 공식 문서](https://cli.vuejs.org/)  
