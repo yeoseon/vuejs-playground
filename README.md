@@ -15,5 +15,10 @@ Vue.js + node.js로 helloworld 출력하기
 
 [인프런 Vue.js 시작하기](https://www.inflearn.com/course/Age-of-Vuejs#) 강의 및 실습 내용 정리  
 
+### [vue-complete-guide](./vue-complete-guide)  
+
+[Vue.js 완벽 가이드](https://www.inflearn.com/course/vue-js/dashboard) 강의 및 실습 내용 정리  
+
 ## Source  
+
 https://kr.vuejs.org/v2/guide/index.html  
