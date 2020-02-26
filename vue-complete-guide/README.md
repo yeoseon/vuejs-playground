@@ -95,3 +95,53 @@ ESLint가 추천하는 코드를 사용하자.
 
 ### 라우터 설치 및 라우터 구현  
 
+```
+npm i vue-router --save
+```
+
+```
+import VueRouter from 'vue-router';
+
+Vue.use(VueRouter);
+
+const router = VueRouter({
+    routes: [
+
+    ]
+})
+
+new Vue({
+    render: h => h(App),
+    router,
+}).$mount('#app')
+```
+이 내용을 ```main.js``` 파일에다가 설정을 하면, main.js가 Router 편향적인 설정파일 쓰임새가 될 수 있다.  
+main.js는 기본적으로 **어플리케이션의 플러그인, 설정 등을 파악 할 수 있는 청사진. 구조도가 눈에 다 보여야 한다.**  
+
+[router](./vue-news/src/router/index.js) 폴더에 index.js를 만들어 설정하자.  
+
+```
+{
+    // path : url 주소
+    path: '/',
+    // component : url 주소로 갔을 때 표시될 Component
+    component: '',
+},
+```
+여기서 이렇게 설정한다.  
+이렇게 router의 설정으로 들어가는 Component 들은 하나의 **페이지(View)**라고 간주한다.  
+그 의미로 [views](./vue-news/src/views) 폴더를 만들어 여기에 라우터에 위치할 컴포넌트들을 따로 관리하자.  
+
+설정해준 후 ES6 문법에 따라 router를 export 및 import 해주면 된다.  
+그 다음 [main.js](./vue-news/src/main.js) 에서 import 해서 사용하면 된다.  
+
+#### [향상된 객체 리터럴 (enhanced object literal)](https://joshua1988.github.io/es6-online-book/enhanced-object-literals.html) 
+```
+router: router
+``` 
+와 같이 앞과 뒤가 같을 때,
+```
+router
+```
+로 축약해서 사용 가능하다. 
+
